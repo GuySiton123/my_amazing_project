@@ -21,8 +21,10 @@ pipeline {
 			}
 		}
 		stage ('Upload the image to docker hub'){
-			docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-				def app = docker.image("guys99/my-website:${commit-id}"), '.').push()
+			steps {
+				docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+					def app = docker.image("guys99/my-website:${commit-id}"), '.').push()
+				}
      			}                                     	
 		}
 	}
