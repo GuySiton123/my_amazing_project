@@ -17,7 +17,7 @@ pipeline {
 		}
 		stage ('Testing the website content'){
 			steps {
-				sh ./content_test.sh
+				sh "./content_test.sh"
 			}
 		}
 		stage ('Upload the image to docker hub'){
