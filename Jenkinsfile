@@ -1,5 +1,5 @@
 pipeline {
-	agent node
+	agent any
 	def commit_id 
 	stages {
 		stage('Defining commit id - for future use'){
