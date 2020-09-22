@@ -7,12 +7,13 @@ node {
 	}
 	stage ('Set up the website container'){
 		docker.build("guys99/my-website:${commit_id}",'.')
-		docker.image("guys99/my-website:${commit_id}").run("-p 80:80")
+		def my_httpd = docker.image("guys99/my-website:${commit_id}").run("-p 80:80")
 	}
 	stage ('Testing the website content'){
 		sh "./content_test.sh"
 	}
 	stage ('Upload the image to docker hub'){
+		my_httpd.stop()
 		docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
 			def app = docker.image("guys99/my-website:${commit_id}").push()
 		}                                     	
