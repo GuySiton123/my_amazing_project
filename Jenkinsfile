@@ -1,5 +1,6 @@
 node {
-	def commit_id 
+	def commit_id
+	def my_httpd
 	stage('Defining commit id - for future use'){
 		checkout scm
 		sh "git rev-parse --short HEAD > .git/commit_id"
@@ -7,7 +8,7 @@ node {
 	}
 	stage ('Set up the website container'){
 		docker.build("guys99/my-website:${commit_id}",'.')
-		def my_httpd = docker.image("guys99/my-website:${commit_id}").run("-p 80:80")
+		my_httpd = docker.image("guys99/my-website:${commit_id}").run("-p 80:80")
 	}
 	stage ('Testing the website content'){
 		sh "./content_test.sh"
